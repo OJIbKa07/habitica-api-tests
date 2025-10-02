@@ -1,0 +1,16 @@
+{
+  "base": {
+    "project": "Habitica API Tests",
+    "environment": "TIFA",
+    "comment": "Everyday task Habitica API",
+    "reportLink": "https://jenkins.autotests.cloud/view/QA.GURU%20students/job/c36-oPalushina-qa_guru-habitica_api_tests/1/",
+    "language": "ru",
+    "allureFolder": "allure-report",
+    "enableChart": true
+  },
+  "telegram": {
+    "token": "8449859667:AAEefnUa6qxxqzBc8IE7wvxxgEjkmRTEQAQ",
+    "chat": "-1002527334715",
+    "replyTo": "@Ogr1407"
+  }
+}
