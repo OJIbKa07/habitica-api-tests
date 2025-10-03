@@ -2,10 +2,15 @@ package tests;
 
 import api.AccountApiSteps;
 import helpers.WithLogin;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import io.restassured.response.Response;
 import models.LoginResponse;
 import models.TaskRequest;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import test_data.TaskType;
 import utils.RandomUtils;
@@ -17,6 +22,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static specs.LoginSpec.authSpec;
 import static test_data.TaskType.TODO;
 
+@Epic("Api")
+@Feature("Работа с задачами (тасками)")
+@Tag("api")
 public class TaskApiTests {
 
     LoginResponse loginResponse = AccountApiSteps.loginWithApi();
@@ -28,6 +36,7 @@ public class TaskApiTests {
     @WithLogin
     @Test
     @DisplayName("Создание новой задачи")
+    @Severity(SeverityLevel.BLOCKER)
     void createTaskTest() {
         taskText = "Задача: " + faker.getTitle();
         taskType = TaskType.getRandomType().getType();
@@ -51,8 +60,8 @@ public class TaskApiTests {
     @WithLogin
     @Test
     @DisplayName("Получение всех задач пользователя")
+    @Severity(SeverityLevel.CRITICAL)
     void getAllTasksTest() {
-
         Response response = step("GET /tasks/user — получаем список задач", () ->
                 authSpec(loginResponse)
                         .get("/tasks/user")
@@ -70,6 +79,7 @@ public class TaskApiTests {
     @WithLogin
     @Test
     @DisplayName("Удаление задачи пользователя")
+    @Severity(SeverityLevel.CRITICAL)
     void deleteTaskTest() {
         taskText = "Задача: " + faker.getTitle();
         taskType = TaskType.getRandomType().getType();
@@ -110,6 +120,7 @@ public class TaskApiTests {
     @WithLogin
     @Test
     @DisplayName("Обновление задачи пользователя")
+    @Severity(SeverityLevel.CRITICAL)
     void updateTaskTest() {
         taskText = "Задача: " + faker.getTitle();
         taskType = TaskType.getRandomType().getType();
@@ -154,6 +165,7 @@ public class TaskApiTests {
     @WithLogin
     @Test
     @DisplayName("Выполнение задачи Todo")
+    @Severity(SeverityLevel.NORMAL)
     void completeTodoTaskTest() {
         String taskText = "Todo: " + faker.getTitle();
         TaskRequest task = new TaskRequest(taskText, TODO.getType());
