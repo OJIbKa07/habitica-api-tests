@@ -1,5 +1,6 @@
 package specs;
 
+import configs.BaseConfigProvider;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.filter.log.LogDetail;
@@ -10,8 +11,8 @@ import io.restassured.specification.ResponseSpecification;
 public class BaseSpecs {
 
     public static RequestSpecification requestSpec = new RequestSpecBuilder()
-            .setBaseUri("https://habitica.com")
-            .setBasePath("/api/v3")
+            .setBaseUri(BaseConfigProvider.baseConfig.baseUri())
+            .setBasePath(BaseConfigProvider.baseConfig.basePath())
             .setContentType("application/json")
             .log(LogDetail.ALL)
             .build();

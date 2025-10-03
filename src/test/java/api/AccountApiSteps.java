@@ -1,5 +1,6 @@
 package api;
 
+import configs.AuthConfigProvider;
 import io.restassured.response.Response;
 import lombok.extern.slf4j.Slf4j;
 import models.LoginResponse;
@@ -7,7 +8,6 @@ import models.LoginResponse;
 import static io.restassured.RestAssured.given;
 import static specs.BaseSpecs.requestSpec;
 import static specs.BaseSpecs.responseSpec;
-import static test_data.AuthData.*;
 
 @Slf4j
 public class AccountApiSteps {
@@ -17,9 +17,9 @@ public class AccountApiSteps {
 
         Response response = given()
                 .spec(requestSpec)
-                .header("x-api-user", HABITICA_USER_ID)
-                .header("x-api-key", HABITICA_API_TOKEN)
-                .header("x-client", HABITICA_USERNAME)
+                .header("x-api-user", AuthConfigProvider.authConfig.user_id())
+                .header("x-api-key", AuthConfigProvider.authConfig.api_token())
+                .header("x-client", AuthConfigProvider.authConfig.username())
                 .get("/user")
                 .then()
                 .spec(responseSpec(200))
@@ -31,7 +31,7 @@ public class AccountApiSteps {
         if (response.statusCode() == 200) {
             loginResponse.setUserID(response.jsonPath().getString("data.id"));
             loginResponse.setUserName(response.jsonPath().getString("data.profile.name"));
-            loginResponse.setToken(HABITICA_API_TOKEN);
+            loginResponse.setToken(AuthConfigProvider.authConfig.api_token());
             loginResponse.setExpires("never");
 
             log.info("Авторизация успешна. Пользователь: {}", loginResponse.getUserName());
