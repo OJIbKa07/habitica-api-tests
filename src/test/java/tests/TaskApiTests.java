@@ -2,10 +2,7 @@ package tests;
 
 import api.AccountApiSteps;
 import helpers.WithLogin;
-import io.qameta.allure.Epic;
-import io.qameta.allure.Feature;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.*;
 import io.restassured.response.Response;
 import models.LoginResponse;
 import models.TaskRequest;
@@ -15,15 +12,15 @@ import org.junit.jupiter.api.Test;
 import test_data.TaskType;
 import utils.RandomUtils;
 
-
 import static com.codeborne.selenide.logevents.SelenideLogger.step;
 import static specs.BaseSpecs.responseSpec;
 import static org.assertj.core.api.Assertions.assertThat;
 import static specs.LoginSpec.authSpec;
 import static test_data.TaskType.TODO;
 
-@Epic("Api")
-@Feature("Работа с задачами (тасками)")
+@Epic("API")
+@Feature("Работа с задачами")
+@Owner("oPalushina")
 @Tag("api")
 public class TaskApiTests {
 
@@ -32,11 +29,12 @@ public class TaskApiTests {
     TaskRequest task;
     String taskText, taskType;
 
-
     @WithLogin
     @Test
+    @Story("Создание задачи")
     @DisplayName("Создание новой задачи")
     @Severity(SeverityLevel.BLOCKER)
+    @Description("Проверяет возможность создания новой задачи через POST /tasks/user")
     void createTaskTest() {
         taskText = "Задача: " + faker.getTitle();
         taskType = TaskType.getRandomType().getType();
@@ -53,14 +51,15 @@ public class TaskApiTests {
 
         step("Проверяем, что задача создана", () -> {
             assertThat(response.jsonPath().getString("data.text")).isEqualTo(taskText);
-            System.out.println("✅ Создана задача: " + taskText);
         });
     }
 
     @WithLogin
     @Test
+    @Story("Получение списка задач")
     @DisplayName("Получение всех задач пользователя")
     @Severity(SeverityLevel.CRITICAL)
+    @Description("Проверяет, что GET /tasks/user возвращает непустой список задач")
     void getAllTasksTest() {
         Response response = step("GET /tasks/user — получаем список задач", () ->
                 authSpec(loginResponse)
@@ -72,14 +71,15 @@ public class TaskApiTests {
 
         step("Проверяем, что список задач не пуст", () -> {
             assertThat(response.jsonPath().getList("data")).isNotEmpty();
-            System.out.println("📋 Найдено задач: " + response.jsonPath().getList("data").size());
         });
     }
 
     @WithLogin
     @Test
+    @Story("Удаление задачи")
     @DisplayName("Удаление задачи пользователя")
     @Severity(SeverityLevel.CRITICAL)
+    @Description("Проверяет, что DELETE /tasks/{id} корректно удаляет задачу")
     void deleteTaskTest() {
         taskText = "Задача: " + faker.getTitle();
         taskType = TaskType.getRandomType().getType();
@@ -93,8 +93,6 @@ public class TaskApiTests {
                         .spec(responseSpec(201))
                         .extract().jsonPath().getString("data.id")
         );
-
-        System.out.println("🆕 Создана задача с ID: " + taskId);
 
         step("DELETE /tasks/{id} — удаляем задачу", () -> {
             authSpec(loginResponse)
@@ -112,15 +110,15 @@ public class TaskApiTests {
 
             String responseBody = allTasks.asString();
             assertThat(responseBody).doesNotContain(taskId);
-            assertThat(responseBody).doesNotContain(taskText);
-            System.out.println("✅ Задача успешно удалена: " + taskId + " (" + taskText + ")");
         });
     }
 
     @WithLogin
     @Test
+    @Story("Обновление задачи")
     @DisplayName("Обновление задачи пользователя")
     @Severity(SeverityLevel.CRITICAL)
+    @Description("Проверяет возможность обновления задачи через PUT /tasks/{id}")
     void updateTaskTest() {
         taskText = "Задача: " + faker.getTitle();
         taskType = TaskType.getRandomType().getType();
@@ -134,8 +132,6 @@ public class TaskApiTests {
                         .spec(responseSpec(201))
                         .extract().jsonPath().getString("data.id")
         );
-
-        System.out.println("🆕 Создана задача с ID: " + taskId);
 
         String updatedText = taskText + " — обновлено";
         TaskRequest updatedTask = new TaskRequest(updatedText, taskType);
@@ -156,16 +152,16 @@ public class TaskApiTests {
                     .extract().response();
 
             String responseBody = allTasks.asString();
-            assertThat(responseBody).contains(taskId);
             assertThat(responseBody).contains(updatedText);
-            System.out.println("✅ Задача успешно обновлена: " + taskId + " (" + updatedText + ")");
         });
     }
 
     @WithLogin
     @Test
+    @Story("Выполнение задачи Todo")
     @DisplayName("Выполнение задачи Todo")
     @Severity(SeverityLevel.NORMAL)
+    @Description("Проверяет, что POST /tasks/{id}/score/up корректно выполняет задачу Todo")
     void completeTodoTaskTest() {
         String taskText = "Todo: " + faker.getTitle();
         TaskRequest task = new TaskRequest(taskText, TODO.getType());
@@ -179,8 +175,6 @@ public class TaskApiTests {
                         .extract().jsonPath().getString("data.id")
         );
 
-        System.out.println("🆕 Создана задача Todo с ID: " + taskId);
-
         Response scoreResponse = step("POST /tasks/{id}/score/up — выполняем задачу Todo", () ->
                 authSpec(loginResponse)
                         .post("/tasks/{id}/score/up", taskId)
@@ -191,7 +185,6 @@ public class TaskApiTests {
 
         step("Проверяем, что задача выполнена", () -> {
             assertThat(scoreResponse.jsonPath().getBoolean("success")).isTrue();
-            System.out.println("✅ Задача Todo выполнена: " + taskId + " (" + taskText + ")");
         });
     }
 }

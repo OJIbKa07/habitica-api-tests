@@ -2,10 +2,7 @@ package tests;
 
 import api.AccountApiSteps;
 import helpers.WithLogin;
-import io.qameta.allure.Epic;
-import io.qameta.allure.Feature;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
+import io.qameta.allure.*;
 import io.restassured.response.Response;
 import models.LoginResponse;
 import org.junit.jupiter.api.DisplayName;
@@ -17,18 +14,21 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static specs.BaseSpecs.responseSpec;
 import static specs.LoginSpec.authSpec;
 
-@Epic("Api")
+@Epic("API")
 @Feature("Авторизация")
+@Owner("oPalushina")
 @Tag("api")
 public class AuthApiTests {
+
     LoginResponse loginResponse = AccountApiSteps.loginWithApi();
 
     @WithLogin
     @Test
+    @Story("Проверка метода логина")
     @DisplayName("Проверка метода авторизации")
     @Severity(SeverityLevel.BLOCKER)
+    @Description("Проверяет, что метод авторизации возвращает корректный статус и заполняет поля userID и userName")
     void loginMethodTest() {
-
         step("Проверяем, что логин прошёл успешно", () -> {
             assertThat(loginResponse.getStatusCode()).isEqualTo(200);
             assertThat(loginResponse.getUserID()).isNotNull();
@@ -39,8 +39,10 @@ public class AuthApiTests {
 
     @WithLogin
     @Test
+    @Story("Получение информации о пользователе")
     @DisplayName("Проверка авторизации и получение информации о пользователе через API")
     @Severity(SeverityLevel.BLOCKER)
+    @Description("Проверяет, что после авторизации GET /user возвращает корректные данные о пользователе")
     void getUserInfoViaApiTest() {
         Response response = step("GET /user — получаем информацию о пользователе", () ->
                 authSpec(loginResponse)
