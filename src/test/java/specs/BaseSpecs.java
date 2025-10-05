@@ -1,7 +1,6 @@
 package specs;
 
 import configs.BaseConfigProvider;
-import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.filter.log.LogDetail;
 import io.restassured.specification.RequestSpecification;

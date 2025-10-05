@@ -5,6 +5,7 @@ import io.restassured.response.Response;
 import lombok.extern.slf4j.Slf4j;
 import models.LoginResponse;
 
+import static helpers.CustomAllureListener.withCustomTemplates;
 import static io.restassured.RestAssured.given;
 import static specs.BaseSpecs.requestSpec;
 import static specs.BaseSpecs.responseSpec;
@@ -16,6 +17,7 @@ public class AccountApiSteps {
         log.info("🔐 Выполняем авторизацию в Habitica API...");
 
         Response response = given()
+                .filter(withCustomTemplates())
                 .spec(requestSpec)
                 .header("x-api-user", AuthConfigProvider.authConfig.user_id())
                 .header("x-api-key", AuthConfigProvider.authConfig.api_token())
