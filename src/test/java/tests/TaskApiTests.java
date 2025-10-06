@@ -14,7 +14,7 @@ import org.junit.jupiter.api.Test;
 import test_data.TaskType;
 import utils.RandomUtils;
 
-import static com.codeborne.selenide.logevents.SelenideLogger.step;
+import static io.qameta.allure.Allure.step;
 import static specs.BaseSpecs.responseSpec;
 import static org.assertj.core.api.Assertions.assertThat;
 import static specs.LoginSpec.authSpec;
@@ -123,9 +123,6 @@ public class TaskApiTests {
                     .spec(responseSpec(200))
                     .extract().response();
 
-            /*String responseBody = allTasks.asString();
-            assertThat(responseBody).doesNotContain(taskId);*/
-
             TaskListResponse tasks = allTasks.as(TaskListResponse.class);
             assertThat(tasks.getData().stream().map(TaskResponse.TaskData::getId))
                     .doesNotContain(taskId);
@@ -169,9 +166,6 @@ public class TaskApiTests {
                     .then()
                     .spec(responseSpec(200))
                     .extract().response();
-
-            /*String responseBody = allTasks.asString();
-            assertThat(responseBody).contains(updatedText);*/
 
             TaskListResponse tasks = allTasks.as(TaskListResponse.class);
             assertThat(tasks.getData().stream().map(TaskResponse.TaskData::getText))
