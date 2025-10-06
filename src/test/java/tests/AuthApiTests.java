@@ -30,11 +30,16 @@ public class AuthApiTests {
     @Severity(SeverityLevel.BLOCKER)
     @Description("Проверяет, что метод авторизации возвращает корректный статус и заполняет поля userID и userName")
     void loginMethodTest() {
-        step("Проверяем, что логин прошёл успешно", () -> {
+        step("Проверяем, что метод логина вернул код 200", () -> {
             assertThat(loginResponse.getStatusCode()).isEqualTo(200);
+        });
+
+        step("Проверяем, что поле userID заполнено", () -> {
             assertThat(loginResponse.getUserID()).isNotNull();
+        });
+
+        step("Проверяем, что поле userName заполнено", () -> {
             assertThat(loginResponse.getUserName()).isNotNull();
-            System.out.println("✅ Авторизация через метод успешна: " + loginResponse.getUserName());
         });
     }
 
@@ -45,7 +50,7 @@ public class AuthApiTests {
     @Severity(SeverityLevel.BLOCKER)
     @Description("Проверяет, что после авторизации GET /user возвращает корректные данные о пользователе")
     void getUserInfoViaApiTest() {
-        Response response = step("GET /user — получаем информацию о пользователе", () ->
+        Response response = step("Отправляем GET /user для получения информации о пользователе", () ->
                 authSpec(loginResponse)
                         .get("/user")
                         .then()
@@ -53,19 +58,25 @@ public class AuthApiTests {
                         .extract().response()
         );
 
-        step("Проверяем отдельные значения в ответе (через path)", () -> {
+        step("Проверяем значения полей в JSON-ответе через JsonPath", () -> {
             assertThat(response.jsonPath().getString("data.id")).isEqualTo(loginResponse.getUserID());
             assertThat(response.jsonPath().getString("data.profile.name")).isEqualTo(loginResponse.getUserName());
         });
 
-        step("Проверяем корректную десериализацию тела ответа в модель", () -> {
+        step("Десериализуем тело ответа в модель UserInfoResponse и проверяем поля", () -> {
             UserInfoResponse userInfo = response.as(UserInfoResponse.class);
 
-            assertThat(userInfo.getData().getId()).isEqualTo(loginResponse.getUserID());
-            assertThat(userInfo.getData().getProfile().getName()).isEqualTo(loginResponse.getUserName());
-            assertThat(userInfo.getData().getProfile()).isNotNull();
+            assertThat(userInfo.getData().getId())
+                    .as("ID пользователя должен совпадать с ID из loginResponse")
+                    .isEqualTo(loginResponse.getUserID());
 
-            System.out.println("✅ Пользователь авторизован через модель: " + userInfo.getData().getProfile().getName());
+            assertThat(userInfo.getData().getProfile().getName())
+                    .as("Имя пользователя должно совпадать с loginResponse")
+                    .isEqualTo(loginResponse.getUserName());
+
+            assertThat(userInfo.getData().getProfile())
+                    .as("Профиль пользователя не должен быть null")
+                    .isNotNull();
         });
     }
 }

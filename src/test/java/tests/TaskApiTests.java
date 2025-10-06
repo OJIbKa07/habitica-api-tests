@@ -15,8 +15,8 @@ import test_data.TaskType;
 import utils.RandomUtils;
 
 import static io.qameta.allure.Allure.step;
-import static specs.BaseSpecs.responseSpec;
 import static org.assertj.core.api.Assertions.assertThat;
+import static specs.BaseSpecs.responseSpec;
 import static specs.LoginSpec.authSpec;
 import static test_data.TaskType.TODO;
 
@@ -42,7 +42,7 @@ public class TaskApiTests {
         taskType = TaskType.getRandomType().getType();
         task = new TaskRequest(taskText, taskType);
 
-        Response response = step("POST /tasks/user — создаём задачу", () ->
+        Response response = step("Отправляем POST /tasks/user для создания задачи", () ->
                 authSpec(loginResponse)
                         .body(task)
                         .post("/tasks/user")
@@ -51,11 +51,11 @@ public class TaskApiTests {
                         .extract().response()
         );
 
-        step("Проверяем, что задача создана", () -> {
+        step("Проверяем, что задача создана с корректным текстом", () -> {
             assertThat(response.jsonPath().getString("data.text")).isEqualTo(taskText);
         });
 
-        step("Проверяем, что задача корректно десериализуется в модель", () -> {
+        step("Десериализуем ответ и проверяем поля модели", () -> {
             TaskResponse taskResponse = response.as(TaskResponse.class);
             assertThat(taskResponse.getData().getText()).isEqualTo(taskText);
             assertThat(taskResponse.getData().getType()).isEqualTo(taskType);
@@ -70,7 +70,7 @@ public class TaskApiTests {
     @Severity(SeverityLevel.CRITICAL)
     @Description("Проверяет, что GET /tasks/user возвращает непустой список задач")
     void getAllTasksTest() {
-        Response response = step("GET /tasks/user — получаем список задач", () ->
+        Response response = step("Отправляем GET /tasks/user для получения списка задач", () ->
                 authSpec(loginResponse)
                         .get("/tasks/user")
                         .then()
@@ -82,7 +82,7 @@ public class TaskApiTests {
             assertThat(response.jsonPath().getList("data")).isNotEmpty();
         });
 
-        step("Проверяем, что список задач десериализуется в модель", () -> {
+        step("Десериализуем список задач и проверяем данные", () -> {
             TaskListResponse taskList = response.as(TaskListResponse.class);
             assertThat(taskList.getData()).isNotEmpty();
             assertThat(taskList.getData().get(0).getText()).isNotBlank();
@@ -100,7 +100,7 @@ public class TaskApiTests {
         taskType = TaskType.getRandomType().getType();
         task = new TaskRequest(taskText, taskType);
 
-        String taskId = step("POST /tasks/user — создаём задачу", () ->
+        String taskId = step("Создаём задачу через POST /tasks/user", () ->
                 authSpec(loginResponse)
                         .body(task)
                         .post("/tasks/user")
@@ -109,14 +109,14 @@ public class TaskApiTests {
                         .extract().jsonPath().getString("data.id")
         );
 
-        step("DELETE /tasks/{id} — удаляем задачу", () -> {
+        step("Удаляем задачу через DELETE /tasks/{id}", () -> {
             authSpec(loginResponse)
                     .delete("/tasks/" + taskId)
                     .then()
                     .spec(responseSpec(200));
         });
 
-        step("GET /tasks/user — проверяем, что задача удалена", () -> {
+        step("Проверяем, что задача отсутствует в списке", () -> {
             Response allTasks = authSpec(loginResponse)
                     .get("/tasks/user")
                     .then()
@@ -140,7 +140,7 @@ public class TaskApiTests {
         taskType = TaskType.getRandomType().getType();
         task = new TaskRequest(taskText, taskType);
 
-        String taskId = step("POST /tasks/user — создаём задачу", () ->
+        String taskId = step("Создаём задачу через POST /tasks/user", () ->
                 authSpec(loginResponse)
                         .body(task)
                         .post("/tasks/user")
@@ -152,7 +152,7 @@ public class TaskApiTests {
         String updatedText = taskText + " — обновлено";
         TaskRequest updatedTask = new TaskRequest(updatedText, taskType);
 
-        step("PUT /tasks/{id} — обновляем задачу", () -> {
+        step("Обновляем задачу через PUT /tasks/{id}", () -> {
             authSpec(loginResponse)
                     .body(updatedTask)
                     .put("/tasks/" + taskId)
@@ -160,7 +160,7 @@ public class TaskApiTests {
                     .spec(responseSpec(200));
         });
 
-        step("GET /tasks/user — проверяем обновлённую задачу", () -> {
+        step("Проверяем, что задача обновлена в списке", () -> {
             Response allTasks = authSpec(loginResponse)
                     .get("/tasks/user")
                     .then()
@@ -183,7 +183,7 @@ public class TaskApiTests {
         String taskText = "Todo: " + faker.getTitle();
         TaskRequest task = new TaskRequest(taskText, TODO.getType());
 
-        String taskId = step("POST /tasks/user — создаём задачу Todo", () ->
+        String taskId = step("Создаём задачу Todo через POST /tasks/user", () ->
                 authSpec(loginResponse)
                         .body(task)
                         .post("/tasks/user")
@@ -192,7 +192,7 @@ public class TaskApiTests {
                         .extract().jsonPath().getString("data.id")
         );
 
-        Response scoreResponse = step("POST /tasks/{id}/score/up — выполняем задачу Todo", () ->
+        Response scoreResponse = step("Выполняем задачу через POST /tasks/{id}/score/up", () ->
                 authSpec(loginResponse)
                         .post("/tasks/{id}/score/up", taskId)
                         .then()
@@ -200,11 +200,11 @@ public class TaskApiTests {
                         .extract().response()
         );
 
-        step("Проверяем, что задача выполнена", () -> {
+        step("Проверяем, что задача помечена как выполненная", () -> {
             assertThat(scoreResponse.jsonPath().getBoolean("success")).isTrue();
         });
 
-        step("Проверяем, что ответ корректно маппится в модель", () -> {
+        step("Десериализуем ответ и проверяем флаг успеха", () -> {
             TaskResponse taskResponse = scoreResponse.as(TaskResponse.class);
             assertThat(taskResponse.isSuccess()).isTrue();
         });
