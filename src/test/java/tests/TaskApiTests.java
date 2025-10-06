@@ -21,7 +21,7 @@ import static specs.LoginSpec.authSpec;
 import static test_data.TaskType.TODO;
 
 @Epic("API")
-@Feature("Task Management")
+@Feature("Работа с задачами")
 @Owner("oPalushina")
 @Tag("api")
 public class TaskApiTests {
@@ -33,16 +33,16 @@ public class TaskApiTests {
 
     @WithLogin
     @Test
-    @Story("Create Task")
-    @DisplayName("Create a new task")
+    @Story("Создание задачи")
+    @DisplayName("Создание новой задачи")
     @Severity(SeverityLevel.BLOCKER)
-    @Description("Verifies the ability to create a new task via POST /tasks/user")
+    @Description("Проверяет возможность создания новой задачи через POST /tasks/user")
     void createTaskTest() {
-        taskText = "Task: " + faker.getTitle();
+        taskText = "Задача: " + faker.getTitle();
         taskType = TaskType.getRandomType().getType();
         task = new TaskRequest(taskText, taskType);
 
-        Response response = step("Send POST /tasks/user to create a task", () ->
+        Response response = step("Отправляем POST /tasks/user для создания задачи", () ->
                 authSpec(loginResponse)
                         .body(task)
                         .post("/tasks/user")
@@ -51,11 +51,11 @@ public class TaskApiTests {
                         .extract().response()
         );
 
-        step("Verify the task is created with correct text", () -> {
+        step("Проверяем, что задача создана с корректным текстом", () -> {
             assertThat(response.jsonPath().getString("data.text")).isEqualTo(taskText);
         });
 
-        step("Deserialize response and check model fields", () -> {
+        step("Десериализуем ответ и проверяем поля модели", () -> {
             TaskResponse taskResponse = response.as(TaskResponse.class);
             assertThat(taskResponse.getData().getText()).isEqualTo(taskText);
             assertThat(taskResponse.getData().getType()).isEqualTo(taskType);
@@ -65,12 +65,12 @@ public class TaskApiTests {
 
     @WithLogin
     @Test
-    @Story("Get Task List")
-    @DisplayName("Get all user tasks")
+    @Story("Получение списка задач")
+    @DisplayName("Получение всех задач пользователя")
     @Severity(SeverityLevel.CRITICAL)
-    @Description("Verifies that GET /tasks/user returns a non-empty task list")
+    @Description("Проверяет, что GET /tasks/user возвращает непустой список задач")
     void getAllTasksTest() {
-        Response response = step("Send GET /tasks/user to retrieve task list", () ->
+        Response response = step("Отправляем GET /tasks/user для получения списка задач", () ->
                 authSpec(loginResponse)
                         .get("/tasks/user")
                         .then()
@@ -78,11 +78,11 @@ public class TaskApiTests {
                         .extract().response()
         );
 
-        step("Verify the task list is not empty", () -> {
+        step("Проверяем, что список задач не пуст", () -> {
             assertThat(response.jsonPath().getList("data")).isNotEmpty();
         });
 
-        step("Deserialize task list and verify data", () -> {
+        step("Десериализуем список задач и проверяем данные", () -> {
             TaskListResponse taskList = response.as(TaskListResponse.class);
             assertThat(taskList.getData()).isNotEmpty();
             assertThat(taskList.getData().get(0).getText()).isNotBlank();
@@ -91,16 +91,16 @@ public class TaskApiTests {
 
     @WithLogin
     @Test
-    @Story("Delete Task")
-    @DisplayName("Delete a user task")
+    @Story("Удаление задачи")
+    @DisplayName("Удаление задачи пользователя")
     @Severity(SeverityLevel.CRITICAL)
-    @Description("Verifies that DELETE /tasks/{id} correctly deletes a task")
+    @Description("Проверяет, что DELETE /tasks/{id} корректно удаляет задачу")
     void deleteTaskTest() {
-        taskText = "Task: " + faker.getTitle();
+        taskText = "Задача: " + faker.getTitle();
         taskType = TaskType.getRandomType().getType();
         task = new TaskRequest(taskText, taskType);
 
-        String taskId = step("Create a task via POST /tasks/user", () ->
+        String taskId = step("Создаём задачу через POST /tasks/user", () ->
                 authSpec(loginResponse)
                         .body(task)
                         .post("/tasks/user")
@@ -109,14 +109,14 @@ public class TaskApiTests {
                         .extract().jsonPath().getString("data.id")
         );
 
-        step("Delete the task via DELETE /tasks/{id}", () -> {
+        step("Удаляем задачу через DELETE /tasks/{id}", () -> {
             authSpec(loginResponse)
                     .delete("/tasks/" + taskId)
                     .then()
                     .spec(responseSpec(200));
         });
 
-        step("Verify the task is not present in the list", () -> {
+        step("Проверяем, что задача отсутствует в списке", () -> {
             Response allTasks = authSpec(loginResponse)
                     .get("/tasks/user")
                     .then()
@@ -131,16 +131,16 @@ public class TaskApiTests {
 
     @WithLogin
     @Test
-    @Story("Update Task")
-    @DisplayName("Update a user task")
+    @Story("Обновление задачи")
+    @DisplayName("Обновление задачи пользователя")
     @Severity(SeverityLevel.CRITICAL)
-    @Description("Verifies the ability to update a task via PUT /tasks/{id}")
+    @Description("Проверяет возможность обновления задачи через PUT /tasks/{id}")
     void updateTaskTest() {
-        taskText = "Task: " + faker.getTitle();
+        taskText = "Задача: " + faker.getTitle();
         taskType = TaskType.getRandomType().getType();
         task = new TaskRequest(taskText, taskType);
 
-        String taskId = step("Create a task via POST /tasks/user", () ->
+        String taskId = step("Создаём задачу через POST /tasks/user", () ->
                 authSpec(loginResponse)
                         .body(task)
                         .post("/tasks/user")
@@ -149,10 +149,10 @@ public class TaskApiTests {
                         .extract().jsonPath().getString("data.id")
         );
 
-        String updatedText = taskText + " - updated";
+        String updatedText = taskText + " — обновлено";
         TaskRequest updatedTask = new TaskRequest(updatedText, taskType);
 
-        step("Update the task via PUT /tasks/{id}", () -> {
+        step("Обновляем задачу через PUT /tasks/{id}", () -> {
             authSpec(loginResponse)
                     .body(updatedTask)
                     .put("/tasks/" + taskId)
@@ -160,7 +160,7 @@ public class TaskApiTests {
                     .spec(responseSpec(200));
         });
 
-        step("Verify the task is updated in the list", () -> {
+        step("Проверяем, что задача обновлена в списке", () -> {
             Response allTasks = authSpec(loginResponse)
                     .get("/tasks/user")
                     .then()
@@ -175,15 +175,15 @@ public class TaskApiTests {
 
     @WithLogin
     @Test
-    @Story("Complete Todo Task")
-    @DisplayName("Complete a Todo task")
+    @Story("Выполнение задачи Todo")
+    @DisplayName("Выполнение задачи Todo")
     @Severity(SeverityLevel.NORMAL)
-    @Description("Verifies that POST /tasks/{id}/score/up correctly completes a Todo task")
+    @Description("Проверяет, что POST /tasks/{id}/score/up корректно выполняет задачу Todo")
     void completeTodoTaskTest() {
         String taskText = "Todo: " + faker.getTitle();
         TaskRequest task = new TaskRequest(taskText, TODO.getType());
 
-        String taskId = step("Create a Todo task via POST /tasks/user", () ->
+        String taskId = step("Создаём задачу Todo через POST /tasks/user", () ->
                 authSpec(loginResponse)
                         .body(task)
                         .post("/tasks/user")
@@ -192,7 +192,7 @@ public class TaskApiTests {
                         .extract().jsonPath().getString("data.id")
         );
 
-        Response scoreResponse = step("Complete the task via POST /tasks/{id}/score/up", () ->
+        Response scoreResponse = step("Выполняем задачу через POST /tasks/{id}/score/up", () ->
                 authSpec(loginResponse)
                         .post("/tasks/{id}/score/up", taskId)
                         .then()
@@ -200,11 +200,11 @@ public class TaskApiTests {
                         .extract().response()
         );
 
-        step("Verify the task is marked as completed", () -> {
+        step("Проверяем, что задача помечена как выполненная", () -> {
             assertThat(scoreResponse.jsonPath().getBoolean("success")).isTrue();
         });
 
-        step("Deserialize response and verify success flag", () -> {
+        step("Десериализуем ответ и проверяем флаг успеха", () -> {
             TaskResponse taskResponse = scoreResponse.as(TaskResponse.class);
             assertThat(taskResponse.isSuccess()).isTrue();
         });
