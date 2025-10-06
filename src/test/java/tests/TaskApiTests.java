@@ -5,7 +5,9 @@ import helpers.WithLogin;
 import io.qameta.allure.*;
 import io.restassured.response.Response;
 import models.LoginResponse;
+import models.TaskListResponse;
 import models.TaskRequest;
+import models.TaskResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -52,6 +54,13 @@ public class TaskApiTests {
         step("Проверяем, что задача создана", () -> {
             assertThat(response.jsonPath().getString("data.text")).isEqualTo(taskText);
         });
+
+        step("Проверяем, что задача корректно десериализуется в модель", () -> {
+            TaskResponse taskResponse = response.as(TaskResponse.class);
+            assertThat(taskResponse.getData().getText()).isEqualTo(taskText);
+            assertThat(taskResponse.getData().getType()).isEqualTo(taskType);
+            assertThat(taskResponse.getData().getId()).isNotBlank();
+        });
     }
 
     @WithLogin
@@ -71,6 +80,12 @@ public class TaskApiTests {
 
         step("Проверяем, что список задач не пуст", () -> {
             assertThat(response.jsonPath().getList("data")).isNotEmpty();
+        });
+
+        step("Проверяем, что список задач десериализуется в модель", () -> {
+            TaskListResponse taskList = response.as(TaskListResponse.class);
+            assertThat(taskList.getData()).isNotEmpty();
+            assertThat(taskList.getData().get(0).getText()).isNotBlank();
         });
     }
 
@@ -108,8 +123,12 @@ public class TaskApiTests {
                     .spec(responseSpec(200))
                     .extract().response();
 
-            String responseBody = allTasks.asString();
-            assertThat(responseBody).doesNotContain(taskId);
+            /*String responseBody = allTasks.asString();
+            assertThat(responseBody).doesNotContain(taskId);*/
+
+            TaskListResponse tasks = allTasks.as(TaskListResponse.class);
+            assertThat(tasks.getData().stream().map(TaskResponse.TaskData::getId))
+                    .doesNotContain(taskId);
         });
     }
 
@@ -151,8 +170,12 @@ public class TaskApiTests {
                     .spec(responseSpec(200))
                     .extract().response();
 
-            String responseBody = allTasks.asString();
-            assertThat(responseBody).contains(updatedText);
+            /*String responseBody = allTasks.asString();
+            assertThat(responseBody).contains(updatedText);*/
+
+            TaskListResponse tasks = allTasks.as(TaskListResponse.class);
+            assertThat(tasks.getData().stream().map(TaskResponse.TaskData::getText))
+                    .contains(updatedText);
         });
     }
 
@@ -185,6 +208,11 @@ public class TaskApiTests {
 
         step("Проверяем, что задача выполнена", () -> {
             assertThat(scoreResponse.jsonPath().getBoolean("success")).isTrue();
+        });
+
+        step("Проверяем, что ответ корректно маппится в модель", () -> {
+            TaskResponse taskResponse = scoreResponse.as(TaskResponse.class);
+            assertThat(taskResponse.isSuccess()).isTrue();
         });
     }
 }

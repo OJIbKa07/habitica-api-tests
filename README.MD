@@ -91,7 +91,7 @@
 <a id="jenkins"></a>
 ## Сборка в Jenkins ([link](https://jenkins.autotests.cloud/job/C24-egorovaa-apitests/))
 <p align="center">  
-<a href="https://jenkins.autotests.cloud/job/C24-egorovaa-apitests/"><img src="images/screen/jenkins_report.png" alt="Jenkins" width="950"/></a>  
+<a href="https://jenkins.autotests.cloud/view/QA.GURU%20students/job/c36-oPalushina-qa_guru-habitica_api_tests/"><img src="images/screen/jenkins_report.png" alt="Jenkins" width="950"/></a>  
 </p>
 
 ### **Параметры запуска Jenkins:**
@@ -107,21 +107,21 @@
 
 ----
 <a id="console"></a>
-## Run from Terminal
+## Запуск из терминала
 
-**Local launch**
+**Локальный запуск**
 ```bash  
 gradle clean test
 ```
 
-**Remote launch via Jenkins**
+**Удаленный запуск из Jenkins**
 ```bash
 clean test
--DuserId=${USER_ID}
--DaoiToken=${API_TOKEN}
--Dusername=${USERNAME}
--DbasePath=${BASE_PATH}
--DbaseUri=${BASE_URI}
+-DuserId=${USER_ID} - id пользователя из личного кабинета Habitica
+-DaoiToken=${API_TOKEN} - api токен из личного кабинета Habitica
+-Dusername=${USERNAME} - никнейм пользователя
+-DbaseUri=${BASE_URI} - адрес Habitica для тестов
+-DbasePath=${BASE_PATH} - метод для api тестов 
 ```
 
 
@@ -131,12 +131,12 @@ clean test
 
 **Страница отчета**
 <p align="center">  
-<a href="https://jenkins.autotests.cloud/job/C24-egorovaa-apitests/allure/"><img src="images/screen/allure_report_main.png" alt="Allure Report main" width="950"/></a>  
+<a href="https://jenkins.autotests.cloud/view/QA.GURU%20students/job/c36-oPalushina-qa_guru-habitica_api_tests/20/allure/"><img src="images/screen/allure_report_main.png" alt="Allure Report main" width="950"/></a>  
 </p>
 
 **Тест-кейсы**
 <p align="center">  
-<a href="https://jenkins.autotests.cloud/job/C24-egorovaa-apitests/allure/"><img src="images/screen/allure_report_cases.png" alt="Allure Report testcases" width="950"/></a>  
+<a href="https://jenkins.autotests.cloud/view/QA.GURU%20students/job/c36-oPalushina-qa_guru-habitica_api_tests/20/allure/"><img src="images/screen/allure_report_cases.png" alt="Allure Report testcases" width="950"/></a>  
 </p>
 
 
@@ -144,17 +144,17 @@ clean test
 <a id="testops"></a>
 ## Интеграция Allure TestOps ([link](https://allure.autotests.cloud/project/4213/dashboards))
 <p align="center">  
-<a href="https://allure.autotests.cloud/project/4213/dashboards"><img src="images/screen/allure_testops_main.png" alt="Allure TestOps" width="950"/></a>  
+<a href="https://allure.autotests.cloud/project/4932/dashboards"><img src="images/screen/allure_testops_main.png" alt="Allure TestOps" width="950"/></a>  
 </p>
 
 **Ручные тест-кейсы**
 <p align="center">  
-<a href="https://allure.autotests.cloud/project/4213/dashboards"><img src="images/screen/allure_testops_manual.png" alt="Allure TestOps" width="950"/></a>  
+<a href="https://allure.autotests.cloud/project/4932/dashboards"><img src="images/screen/allure_testops_manual.png" alt="Allure TestOps" width="950"/></a>  
 </p>
 
 **Автоматизированные тест-кейсы**
 <p align="center">  
-<a href="https://allure.autotests.cloud/project/4213/dashboards"><img src="images/screen/allure_testops_auto.png" alt="Allure TestOps" width="950"/></a>  
+<a href="https://allure.autotests.cloud/project/4932/dashboards"><img src="images/screen/allure_testops_auto.png" alt="Allure TestOps" width="950"/></a>  
 </p>
 
 ----

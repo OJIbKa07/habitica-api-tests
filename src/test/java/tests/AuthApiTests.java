@@ -5,6 +5,7 @@ import helpers.WithLogin;
 import io.qameta.allure.*;
 import io.restassured.response.Response;
 import models.LoginResponse;
+import models.UserInfoResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -52,10 +53,19 @@ public class AuthApiTests {
                         .extract().response()
         );
 
-        step("Проверяем, что пользователь авторизован и данные совпадают с логином", () -> {
+        step("Проверяем отдельные значения в ответе (через path)", () -> {
             assertThat(response.jsonPath().getString("data.id")).isEqualTo(loginResponse.getUserID());
             assertThat(response.jsonPath().getString("data.profile.name")).isEqualTo(loginResponse.getUserName());
-            System.out.println("✅ Пользователь авторизован через API: " + loginResponse.getUserName());
+        });
+
+        step("Проверяем корректную десериализацию тела ответа в модель", () -> {
+            UserInfoResponse userInfo = response.as(UserInfoResponse.class);
+
+            assertThat(userInfo.getData().getId()).isEqualTo(loginResponse.getUserID());
+            assertThat(userInfo.getData().getProfile().getName()).isEqualTo(loginResponse.getUserName());
+            assertThat(userInfo.getData().getProfile()).isNotNull();
+
+            System.out.println("✅ Пользователь авторизован через модель: " + userInfo.getData().getProfile().getName());
         });
     }
 }
