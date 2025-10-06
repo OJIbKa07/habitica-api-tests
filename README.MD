@@ -147,11 +147,6 @@ clean test
 <a href="https://allure.autotests.cloud/project/4932/dashboards"><img src="images/screen/allure_testops_main.png" alt="Allure TestOps" width="950"/></a>  
 </p>
 
-**Ручные тест-кейсы**
-<p align="center">  
-<a href="https://allure.autotests.cloud/project/4932/dashboards"><img src="images/screen/allure_testops_manual.png" alt="Allure TestOps" width="950"/></a>  
-</p>
-
 **Автоматизированные тест-кейсы**
 <p align="center">  
 <a href="https://allure.autotests.cloud/project/4932/dashboards"><img src="images/screen/allure_testops_auto.png" alt="Allure TestOps" width="950"/></a>  
