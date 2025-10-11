@@ -5,7 +5,7 @@ import io.restassured.response.Response;
 import lombok.extern.slf4j.Slf4j;
 import models.LoginResponse;
 
-import static helpers.CustomAllureListener.withCustomTemplates;
+import static helpers.allure.report.CustomAllureListener.withCustomTemplates;
 import static io.restassured.RestAssured.given;
 import static specs.BaseSpecs.requestSpec;
 import static specs.BaseSpecs.responseSpec;

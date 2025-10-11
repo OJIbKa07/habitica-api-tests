@@ -1,4 +1,4 @@
-package helpers;
+package helpers.login;
 import api.AccountApiSteps;
 import models.LoginResponse;
 import org.junit.jupiter.api.extension.BeforeEachCallback;

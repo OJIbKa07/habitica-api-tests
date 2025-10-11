@@ -1,7 +1,7 @@
 package tests;
 
 import api.AccountApiSteps;
-import helpers.WithLogin;
+import helpers.login.WithLogin;
 import io.qameta.allure.*;
 import io.restassured.response.Response;
 import models.LoginResponse;
@@ -9,16 +9,22 @@ import models.UserInfoResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import helpers.allure.annotations.Layer;
+import helpers.allure.annotations.Microservice;
 
 import static io.qameta.allure.Allure.step;
 import static org.assertj.core.api.Assertions.assertThat;
 import static specs.BaseSpecs.responseSpec;
 import static specs.LoginSpec.authSpec;
 
-@Epic("API")
-@Feature("Авторизация")
 @Owner("oPalushina")
+@Layer("api")
+@Microservice("UserService")
 @Tag("api")
+@Epic("Пользователи")
+@Feature("Авторизация (API)")
+@Story("Авторизация пользователя в системе")
+@DisplayName("API: Авторизация в системе")
 public class AuthApiTests {
 
     LoginResponse loginResponse = AccountApiSteps.loginWithApi();

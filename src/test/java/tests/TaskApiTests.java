@@ -1,7 +1,9 @@
 package tests;
 
 import api.AccountApiSteps;
-import helpers.WithLogin;
+import helpers.allure.annotations.Layer;
+import helpers.allure.annotations.Microservice;
+import helpers.login.WithLogin;
 import io.qameta.allure.*;
 import io.restassured.response.Response;
 import models.LoginResponse;
@@ -20,10 +22,14 @@ import static specs.BaseSpecs.responseSpec;
 import static specs.LoginSpec.authSpec;
 import static test_data.TaskType.TODO;
 
-@Epic("API")
-@Feature("Работа с задачами")
 @Owner("oPalushina")
+@Layer("api")
+@Microservice("TaskService")
 @Tag("api")
+@Epic("Задачи")
+@Feature("Работа с задачами (API)")
+@Story("CRUD операций задач")
+@DisplayName("API: Работа с задачами")
 public class TaskApiTests {
 
     LoginResponse loginResponse = AccountApiSteps.loginWithApi();

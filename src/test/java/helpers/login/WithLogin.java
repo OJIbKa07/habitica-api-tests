@@ -1,4 +1,4 @@
-package helpers;
+package helpers.login;
 
 import org.junit.jupiter.api.extension.ExtendWith;
 
