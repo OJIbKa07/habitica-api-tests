@@ -42,6 +42,7 @@ public class TaskApiTests {
     @Story("Создание задачи")
     @DisplayName("Создание новой задачи")
     @Severity(SeverityLevel.BLOCKER)
+    @Issue("HOMEWORK-1504")
     @Description("Проверяет возможность создания новой задачи через POST /tasks/user")
     void createTaskTest() {
         taskText = "Задача: " + faker.getTitle();
@@ -74,6 +75,7 @@ public class TaskApiTests {
     @Story("Получение списка задач")
     @DisplayName("Получение всех задач пользователя")
     @Severity(SeverityLevel.CRITICAL)
+    @Issue("HOMEWORK-1504")
     @Description("Проверяет, что GET /tasks/user возвращает непустой список задач")
     void getAllTasksTest() {
         Response response = step("Отправляем GET /tasks/user для получения списка задач", () ->
@@ -100,6 +102,7 @@ public class TaskApiTests {
     @Story("Удаление задачи")
     @DisplayName("Удаление задачи пользователя")
     @Severity(SeverityLevel.CRITICAL)
+    @Issue("HOMEWORK-1504")
     @Description("Проверяет, что DELETE /tasks/{id} корректно удаляет задачу")
     void deleteTaskTest() {
         taskText = "Задача: " + faker.getTitle();
@@ -140,6 +143,7 @@ public class TaskApiTests {
     @Story("Обновление задачи")
     @DisplayName("Обновление задачи пользователя")
     @Severity(SeverityLevel.CRITICAL)
+    @Issue("HOMEWORK-1504")
     @Description("Проверяет возможность обновления задачи через PUT /tasks/{id}")
     void updateTaskTest() {
         taskText = "Задача: " + faker.getTitle();
@@ -184,6 +188,7 @@ public class TaskApiTests {
     @Story("Выполнение задачи Todo")
     @DisplayName("Выполнение задачи Todo")
     @Severity(SeverityLevel.NORMAL)
+    @Issue("HOMEWORK-1504")
     @Description("Проверяет, что POST /tasks/{id}/score/up корректно выполняет задачу Todo")
     void completeTodoTaskTest() {
         String taskText = "Todo: " + faker.getTitle();

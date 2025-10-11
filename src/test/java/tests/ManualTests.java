@@ -1,6 +1,7 @@
 package tests;
 
 import helpers.allure.testCase.Manual;
+import io.qameta.allure.Issue;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static io.qameta.allure.Allure.step;
@@ -9,6 +10,7 @@ public class ManualTests {
 
     @Test
     @Manual
+    @Issue("HOMEWORK-1504")
     @DisplayName("Авторизация пользователя через Log In на habitica.com")
     public void loginTest() {
         step("Открываем сайт habitica.com");
@@ -21,6 +23,7 @@ public class ManualTests {
 
     @Test
     @Manual
+    @Issue("HOMEWORK-1504")
     @DisplayName("Регистрация нового пользователя через Sign Up")
     public void registrationTest() {
         step("Открываем сайт habitica.com");
@@ -33,6 +36,7 @@ public class ManualTests {
 
     @Test
     @Manual
+    @Issue("HOMEWORK-1504")
     @DisplayName("Создание новой задачи типа To-Do")
     public void createTodoTaskTest() {
         step("Авторизуемся как зарегистрированный пользователь");
@@ -46,6 +50,7 @@ public class ManualTests {
 
     @Test
     @Manual
+    @Issue("HOMEWORK-1504")
     @DisplayName("Создание новой привычки (Habit)")
     public void createHabitTest() {
         step("Авторизуемся как зарегистрированный пользователь");
@@ -60,6 +65,7 @@ public class ManualTests {
 
     @Test
     @Manual
+    @Issue("HOMEWORK-1504")
     @DisplayName("Создание ежедневной задачи (Daily)")
     public void createDailyTaskTest() {
         step("Авторизуемся как зарегистрированный пользователь");
@@ -74,6 +80,7 @@ public class ManualTests {
 
     @Test
     @Manual
+    @Issue("HOMEWORK-1504")
     @DisplayName("Отметить выполнение задачи и получить награду (EXP + Gold)")
     public void completeTaskRewardTest() {
         step("Авторизуемся как зарегистрированный пользователь");
@@ -85,6 +92,7 @@ public class ManualTests {
 
     @Test
     @Manual
+    @Issue("HOMEWORK-1504")
     @DisplayName("Покупка предмета в Reward Shop за золото")
     public void buyItemShopTest() {
         step("Авторизуемся как зарегистрированный пользователь с достаточным количеством Gold");
@@ -98,6 +106,7 @@ public class ManualTests {
 
     @Test
     @Manual
+    @Issue("HOMEWORK-1504")
     @DisplayName("Отправка сообщения в чат Party или Guild")
     public void sendChatMessageTest() {
         step("Авторизуемся как зарегистрированный пользователь");
