@@ -1,6 +1,8 @@
 package tests;
 
 import api.AccountApiSteps;
+import helpers.allure.annotations.JiraIssue;
+import helpers.allure.annotations.JiraIssues;
 import helpers.login.WithLogin;
 import io.qameta.allure.*;
 import io.restassured.response.Response;
@@ -34,7 +36,7 @@ public class AuthApiTests {
     @Story("Проверка метода логина")
     @DisplayName("Проверка метода авторизации")
     @Severity(SeverityLevel.BLOCKER)
-    @Issue("HOMEWORK-1504")
+    @JiraIssues({@JiraIssue("HOMEWORK-1504")})
     @Description("Проверяет, что метод авторизации возвращает корректный статус и заполняет поля userID и userName")
     void loginMethodTest() {
         step("Проверяем, что метод логина вернул код 200", () -> {
@@ -55,7 +57,7 @@ public class AuthApiTests {
     @Story("Получение информации о пользователе")
     @DisplayName("Проверка авторизации и получение информации о пользователе через API")
     @Severity(SeverityLevel.BLOCKER)
-    @Issue("HOMEWORK-1504")
+    @JiraIssues({@JiraIssue("HOMEWORK-1504")})
     @Description("Проверяет, что после авторизации GET /user возвращает корректные данные о пользователе")
     void getUserInfoViaApiTest() {
         Response response = step("Отправляем GET /user для получения информации о пользователе", () ->
