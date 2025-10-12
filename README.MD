@@ -96,14 +96,13 @@
 
 ### **Параметры запуска Jenkins:**
 
-- `USER_ID` 
-- `API_TOKEN` 
-- `USERNAME`
-- `BASE_PATH` 
-- `BASE_URI`
-- `ENVIRONMENT`
-- `COMMENT`
-
+- `USER_ID` - id пользователя из личного кабинета Habitica
+- `API_TOKEN` - api токен из личного кабинета Habitica
+- `USERNAME` - никнейм пользователя
+- `BASE_PATH` - метод для api тестов
+- `BASE_URI` - адрес Habitica для тестов
+- `ENVIRONMENT` - тестовая среда для запуска
+- `COMMENT` - комментарий
 
 ----
 <a id="console"></a>
@@ -156,7 +155,7 @@ clean test
 <a id="jira"></a>
 ## Интеграция с Jira ([link](https://jira.autotests.cloud/browse/HOMEWORK-1211))
 <p align="center">  
-<a href="https://jira.autotests.cloud/browse/HOMEWORK-1211"><img src="images/screen/jira_task.png" alt="Jira" width="950"/></a>  
+<a href="https://jira.autotests.cloud/browse/HOMEWORK-1504"><img src="images/screen/jira_task.png" alt="Jira" width="950"/></a>  
 </p>
 
 ----
