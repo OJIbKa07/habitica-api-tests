@@ -51,10 +51,10 @@ public class AuthApiTests {
 
     @WithLogin
     @Test
-    @Story("Получение информации о пользователе")
-    @DisplayName("Проверка авторизации и получение информации о пользователе через API")
-    @Severity(SeverityLevel.BLOCKER)
-    @Description("Проверяет, что после авторизации GET /user возвращает корректные данные о пользователе")
+    @DisplayName("UI: Проверка вариантов досуга")
+    @Owner("oPalushina")
+    @Severity(SeverityLevel.NORMAL)
+    @Description("Открывает страницу развлечений, вводит город и дату, проверяет корректность отображения цен, карточек и сортировки по цене")
     void getUserInfoViaApiTest() {
         Response response = step("Отправляем GET /user для получения информации о пользователе", () ->
                 authSpec(loginResponse)
