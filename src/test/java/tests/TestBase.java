@@ -5,12 +5,13 @@ import io.restassured.RestAssured;
 import org.aeonbits.owner.ConfigFactory;
 import org.junit.jupiter.api.BeforeAll;
 
+
 public class TestBase {
-    static BaseConfig baseConfig = ConfigFactory.create(BaseConfig.class, System.getProperties());
+    public static BaseConfig baseConfig = ConfigFactory.create(BaseConfig.class, System.getProperties());
 
     @BeforeAll
     static void setup() {
-        RestAssured.baseURI = System.getProperty("baseUri", baseConfig.baseUri());
-        RestAssured.basePath = System.getProperty("basePath", baseConfig.basePath());
+        RestAssured.baseURI = baseConfig.baseUri();
+        RestAssured.basePath = baseConfig.basePath();
     }
 }

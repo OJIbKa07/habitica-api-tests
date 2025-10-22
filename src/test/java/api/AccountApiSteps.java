@@ -28,6 +28,7 @@ public class AccountApiSteps {
                 .then()
                 .spec(responseSpec(200))
                 .extract().response();
+
         System.out.println("📦 Full response: " + response.asString());
         LoginResponse loginResponse = new LoginResponse();
         loginResponse.setStatusCode(response.getStatusCode());
