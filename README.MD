@@ -1,7 +1,7 @@
 # Проект автоматизации тестирования API [HABITICA](https://habitica.com/)
 <p align="center"> <img src="images/logo/habitica.png"/> </p>
 
-## **Содержание:** ##
+<h2 id="содержание">📜 Содержание:</h2>
 
 * <a href="#description">Описание</a>
 
@@ -87,6 +87,8 @@
 - ✅ Проверка успешного выполнения задачи типа `Todo`
 - ✅ Проверка поля `success` в ответе после выполнения задачи
 
+[Вернуться к оглавлению⬆️](#содержание)
+
 ----
 <a id="jenkins"></a>
 ## Сборка в Jenkins ([link](https://jenkins.autotests.cloud/job/C24-egorovaa-apitests/))
@@ -123,6 +125,7 @@ clean test
 -DbasePath=${BASE_PATH} - метод для api тестов 
 ```
 
+[Вернуться к оглавлению⬆️](#содержание)
 
 ----
 <a id="allure"></a>
@@ -138,6 +141,7 @@ clean test
 <a href="https://jenkins.autotests.cloud/view/QA.GURU%20students/job/c36-oPalushina-qa_guru-habitica_api_tests/20/allure/"><img src="images/screen/allure_report_cases.png" alt="Allure Report testcases" width="950"/></a>  
 </p>
 
+[Вернуться к оглавлению⬆️](#содержание)
 
 ----
 <a id="testops"></a>
@@ -156,6 +160,8 @@ clean test
 <a href="https://allure.autotests.cloud/project/4932/dashboards"><img src="images/screen/allure_testops_manual.png" alt="Allure TestOps" width="950"/></a>  
 </p>
 
+[Вернуться к оглавлению⬆️](#содержание)
+
 ----
 <a id="jira"></a>
 ## Интеграция с Jira ([link](https://jira.autotests.cloud/browse/HOMEWORK-1211))
@@ -163,9 +169,13 @@ clean test
 <a href="https://jira.autotests.cloud/browse/HOMEWORK-1504"><img src="images/screen/jira_task.png" alt="Jira" width="950"/></a>  
 </p>
 
+[Вернуться к оглавлению⬆️](#содержание)
+
 ----
 <a id="telegram"></a>
 ## Отправка результатов в Telegram-бота
 <p align="center">  
 <img src="images/screen/tg_bot_report.png" width="350"/> 
 </p>
+
+[Вернуться к оглавлению⬆️](#содержание) 
