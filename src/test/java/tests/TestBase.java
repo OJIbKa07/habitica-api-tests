@@ -10,7 +10,7 @@ public class TestBase {
 
     @BeforeAll
     static void setup() {
-        RestAssured.baseURI = baseConfig.baseUri();
-        RestAssured.basePath = baseConfig.basePath();
+        RestAssured.baseURI = System.getProperty("baseUri", baseConfig.baseUri());
+        RestAssured.basePath = System.getProperty("basePath", baseConfig.basePath());
     }
 }
