@@ -1,8 +1,6 @@
 package tests;
 
 import api.AccountApiSteps;
-import helpers.allure.annotations.JiraIssue;
-import helpers.allure.annotations.JiraIssues;
 import helpers.allure.annotations.Layer;
 import helpers.allure.annotations.Microservice;
 import helpers.login.WithLogin;

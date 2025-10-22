@@ -9,7 +9,7 @@ public class LoginExtension implements BeforeEachCallback {
     @Override
     public void beforeEach(ExtensionContext context) {
         boolean isWithLogin = context.getTestClass()
-                .map(clazz -> WithLogin.class.isAssignableFrom(clazz))
+                .map(WithLogin.class::isAssignableFrom)
                 .orElse(false);
 
         if (isWithLogin) {

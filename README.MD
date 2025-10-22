@@ -117,7 +117,7 @@ gradle clean test
 ```bash
 clean test
 -DuserId=${USER_ID} - id пользователя из личного кабинета Habitica
--DaoiToken=${API_TOKEN} - api токен из личного кабинета Habitica
+-DapiToken=${API_TOKEN} - api токен из личного кабинета Habitica
 -Dusername=${USERNAME} - никнейм пользователя
 -DbaseUri=${BASE_URI} - адрес Habitica для тестов
 -DbasePath=${BASE_PATH} - метод для api тестов 
