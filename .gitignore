@@ -1,3 +1,4 @@
+src/test/resources/configs/local.properties
 HELP.md
 build/
 !**/src/main/**

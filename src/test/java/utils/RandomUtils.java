@@ -11,8 +11,4 @@ public class RandomUtils {
     public String getTitle() {
         return faker.book().title();
     }
-
-    public String getRewardText() {
-        return faker.esports().event();
-    }
 }
