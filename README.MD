@@ -91,7 +91,7 @@
 
 ----
 <a id="jenkins"></a>
-## Сборка в Jenkins ([link](https://jenkins.autotests.cloud/job/C24-egorovaa-apitests/))
+## [Сборка в Jenkins](https://jenkins.autotests.cloud/job/C24-egorovaa-apitests/)
 <p align="center">  
 <a href="https://jenkins.autotests.cloud/view/QA.GURU%20students/job/c36-oPalushina-qa_guru-habitica_api_tests/"><img src="images/screen/jenkins_report.png" alt="Jenkins" width="950"/></a>  
 </p>
@@ -129,7 +129,7 @@ clean test
 
 ----
 <a id="allure"></a>
-## Allure отчет ([link](https://jenkins.autotests.cloud/job/C24-egorovaa-apitests/allure/))
+## [Allure отчет](https://jenkins.autotests.cloud/job/C24-egorovaa-apitests/allure/)
 
 **Страница отчета**
 <p align="center">  
@@ -145,7 +145,7 @@ clean test
 
 ----
 <a id="testops"></a>
-## Интеграция Allure TestOps ([link](https://allure.autotests.cloud/project/4213/dashboards))
+## [Интеграция Allure TestOps](https://allure.autotests.cloud/project/4213/dashboards)
 <p align="center">  
 <a href="https://allure.autotests.cloud/project/4932/dashboards"><img src="images/screen/allure_testops_main.png" alt="Allure TestOps" width="950"/></a>  
 </p>
@@ -164,7 +164,7 @@ clean test
 
 ----
 <a id="jira"></a>
-## Интеграция с Jira ([link](https://jira.autotests.cloud/browse/HOMEWORK-1211))
+## [Интеграция с Jira](https://jira.autotests.cloud/browse/HOMEWORK-1211)
 <p align="center">  
 <a href="https://jira.autotests.cloud/browse/HOMEWORK-1504"><img src="images/screen/jira_task.png" alt="Jira" width="950"/></a>  
 </p>
