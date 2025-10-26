@@ -16,7 +16,7 @@ public class AccountApiSteps {
     public static final AuthConfig authConfig = ConfigFactory.create(AuthConfig.class, System.getProperties());
 
     public static LoginResponse loginWithApi() {
-        log.info("🔐 Выполняем авторизацию в Habitica API...");
+        log.info("Выполняем авторизацию в Habitica API...");
 
         Response response = given()
                 .filter(withCustomTemplates())
@@ -29,7 +29,6 @@ public class AccountApiSteps {
                 .spec(responseSpec(200))
                 .extract().response();
 
-        System.out.println("📦 Full response: " + response.asString());
         LoginResponse loginResponse = new LoginResponse();
         loginResponse.setStatusCode(response.getStatusCode());
 
